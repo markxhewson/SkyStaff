@@ -1,0 +1,14 @@
+utils:
+  staffPermission: 'skycloud.staff'
+  showServersWithoutStaff: true
+
+messages:
+  header: '&5&l<!> &dOnline Staff &7({players} players online)'
+  serverLine: '&6➦ &e{server} &7({players} playing)'
+  staffLine: ' &f» {prefix}{player} &7[&a{time}&7]'
+  noStaffLine: ' &cNo staff is online.'
+
+servers:
+  - hub-1
+  - hub-2
+  - atlas-1

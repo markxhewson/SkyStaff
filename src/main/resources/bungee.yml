@@ -1,0 +1,7 @@
+name: SkyStaff
+version: '${project.version}'
+main: xyz.lotho.me.SkyStaff
+description: A plugin for SkyCloud Staff.
+
+depends:
+  - LuckPerms
