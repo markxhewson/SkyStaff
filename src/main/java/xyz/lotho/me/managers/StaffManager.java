@@ -3,7 +3,6 @@ package xyz.lotho.me.managers;
 import net.luckperms.api.model.user.User;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import xyz.lotho.me.SkyStaff;
-import xyz.lotho.me.utils.Chat;
 import xyz.lotho.me.utils.Time;
 
 import java.util.HashMap;
