@@ -27,7 +27,7 @@ public class StaffCommand extends Command {
 
         ProxiedPlayer player = (ProxiedPlayer) commandSender;
 
-        if (strings.length == 1 && player.hasPermission(this.instance.config.getConfig().getString("utils.staffPermission"))) {
+        if (player.hasPermission(this.instance.config.getConfig().getString("utils.staffPermission")) && strings.length == 1) {
             if (strings[0].equalsIgnoreCase("hide")) {
                 if (this.instance.staffManager.isHidden(player)) {
                     this.instance.staffManager.unhideStaff(player);

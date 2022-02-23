@@ -24,6 +24,8 @@ messages:
   serverLine: '&6- &a{server} &7({players})'
   staffLine: '  &f- {prefix}{player} &7[{time}&7]'
   noStaffLine: ' &cNo staff is online.'
+  hideLine: '&dYou have &f{mode} &dyour staff list visibility.'
+  noStaffOnlineLine: ' &cThere are currently no members of staff to display.'
 
 servers:
   - hub-01
