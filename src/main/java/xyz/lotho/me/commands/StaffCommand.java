@@ -45,19 +45,20 @@ public class StaffCommand extends Command {
 
             stringBuilder.append(Chat.colorize(serverLine));
 
-            if (!players.isEmpty()) {
+            if (!players.isEmpty() && server.getPlayers().stream().anyMatch((player) -> player.hasPermission(permission))) {
                 players.forEach((player) -> {
+                    if (player.hasPermission(permission)) {
+                        String staffLine = this.instance.config.getConfig().getString("messages.staffLine")
+                                .replace("{prefix}", this.instance.staffManager.getStaffPrefix(player))
+                                .replace("{player}", player.getDisplayName())
+                                .replace("{time}", this.instance.staffManager.getLoginTimeFormatted(player));
 
-                    String staffLine = this.instance.config.getConfig().getString("messages.staffLine")
-                            .replace("{prefix}", this.instance.staffManager.getStaffPrefix(player))
-                            .replace("{player}", player.getDisplayName())
-                            .replace("{time}", this.instance.staffManager.getLoginTimeFormatted(player));
-
-                    if (player.hasPermission(permission)) stringBuilder.append("\n").append(Chat.colorize(staffLine)).append("\n");
-
+                        stringBuilder.append("\n").append(Chat.colorize(staffLine));
+                    }
                 });
+                stringBuilder.append("\n");
             } else {
-                stringBuilder.append(Chat.colorize("\n" + this.instance.config.getConfig().getString("messages.noStaffLine") + "\n"));
+                stringBuilder.append(Chat.colorize("\n" + this.instance.config.getConfig().getString("messages.noStaffLine"))).append("\n");
             }
             stringBuilder.append("\n");
         });
