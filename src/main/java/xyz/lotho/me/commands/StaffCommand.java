@@ -27,7 +27,7 @@ public class StaffCommand extends Command {
 
         ProxiedPlayer player = (ProxiedPlayer) commandSender;
 
-        if (strings.length == 1) {
+        if (strings.length == 1 && player.hasPermission(this.instance.config.getConfig().getString("utils.staffPermission"))) {
             if (strings[0].equalsIgnoreCase("hide")) {
                 if (this.instance.staffManager.isHidden(player)) {
                     this.instance.staffManager.unhideStaff(player);
@@ -44,31 +44,38 @@ public class StaffCommand extends Command {
             String header = this.instance.config.getConfig().getString("messages.header").replace("{players}", String.valueOf(this.instance.getProxy().getPlayers().size()));
 
             builder.append("\n").append(Chat.colorize(header)).append("\n");
-            this.instance.staffManager.getServerStaff().forEach((serverName, staff) -> {
-                ServerInfo server = this.instance.getProxy().getServerInfo(serverName);
 
-                if (server == null) return;
-                if (server.getPlayers().stream().noneMatch((user) -> user.hasPermission(permission)) && !this.instance.config.getConfig().getBoolean("utils.showServersWithoutStaff")) return;
+            HashMap<String, ArrayList<ProxiedPlayer>> serverStaff = this.instance.staffManager.getServerStaff();
 
-                Collection<ProxiedPlayer> players = server.getPlayers();
+            if (serverStaff.isEmpty()) {
+                builder.append("\n").append(Chat.colorize(this.instance.config.getConfig().getString("messages.noStaffOnlineLine"))).append("\n");
+            } else {
+                this.instance.staffManager.getServerStaff().forEach((serverName, staff) -> {
+                    ServerInfo server = this.instance.getProxy().getServerInfo(serverName);
 
-                String serverLine = this.instance.config.getConfig().getString("messages.serverLine").replace("{server}", server.getName()).replace("{players}", String.valueOf(players.size()));
-                builder.append("\n").append(Chat.colorize(serverLine));
+                    if (server == null) return;
+                    if (server.getPlayers().stream().noneMatch((user) -> user.hasPermission(permission)) && !this.instance.config.getConfig().getBoolean("utils.showServersWithoutStaff")) return;
 
-                if (staff.size() == 0) {
-                    builder.append("\n").append(Chat.colorize(this.instance.config.getConfig().getString("messages.noStaffLine"))).append("\n");
-                } else {
-                    staff.forEach((staffMember) -> {
-                        String staffLine = this.instance.config.getConfig().getString("messages.staffLine")
-                                .replace("{prefix}", this.instance.staffManager.getStaffPrefix(staffMember))
-                                .replace("{player}", staffMember.getDisplayName())
-                                .replace("{time}", this.instance.staffManager.getLoginTimeFormatted(staffMember));
+                    Collection<ProxiedPlayer> players = server.getPlayers();
 
-                        builder.append(Chat.colorize("\n" + staffLine));
-                    });
-                    builder.append("\n");
-                }
-            });
+                    String serverLine = this.instance.config.getConfig().getString("messages.serverLine").replace("{server}", server.getName()).replace("{players}", String.valueOf(players.size()));
+                    builder.append("\n").append(Chat.colorize(serverLine));
+
+                    if (staff.size() == 0) {
+                        builder.append("\n").append(Chat.colorize(this.instance.config.getConfig().getString("messages.noStaffLine"))).append("\n");
+                    } else {
+                        staff.forEach((staffMember) -> {
+                            String staffLine = this.instance.config.getConfig().getString("messages.staffLine")
+                                    .replace("{prefix}", this.instance.staffManager.getStaffPrefix(staffMember))
+                                    .replace("{player}", staffMember.getDisplayName())
+                                    .replace("{time}", this.instance.staffManager.getLoginTimeFormatted(staffMember));
+
+                            builder.append(Chat.colorize("\n" + staffLine));
+                        });
+                        builder.append("\n");
+                    }
+                });
+            }
             player.sendMessage(new TextComponent(builder.toString()));
         }
     }

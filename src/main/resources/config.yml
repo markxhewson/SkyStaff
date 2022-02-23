@@ -8,6 +8,7 @@ messages:
   staffLine: ' &f» {prefix}{player} &7[&a{time}&7]'
   noStaffLine: ' &cNo staff is online.'
   hideLine: '&5&l<!> &dYou have &f{mode} &dyour staff list visibility.'
+  noStaffOnlineLine: ' &cThere are currently no members of staff to display.'
 
 servers:
   - hub-1
