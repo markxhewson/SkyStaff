@@ -3,6 +3,8 @@ A minecraft plugin that hooks into BungeeCord &amp; LuckPerms to display all ser
 
 This plugin only hooks into LuckPerms and no other permissions plugin, you must have this plugin installed before attempting to use this plugin.
 
+![alt Image](https://cdn.discordapp.com/attachments/892102571974619148/946077619831574589/Screenshot_1.png)
+
 ## Setup
 Simply place the jar into your plugins folder, and then start & stop your server.
 
