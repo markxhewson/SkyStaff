@@ -1,6 +1,8 @@
 package xyz.lotho.me.commands;
 
+import net.md_5.bungee.api.Callback;
 import net.md_5.bungee.api.CommandSender;
+import net.md_5.bungee.api.ServerPing;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -9,13 +11,14 @@ import xyz.lotho.me.SkyStaff;
 import xyz.lotho.me.utils.Chat;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class StaffCommand extends Command {
 
     SkyStaff instance;
 
     public StaffCommand(SkyStaff instance) {
-        super("staff", "", "slist");
+        super("staff", "", "slist", "s");
 
         this.instance = instance;
     }
@@ -46,7 +49,6 @@ public class StaffCommand extends Command {
 
             builder.append("\n").append(Chat.colorize(header)).append("\n");
 
-
             HashMap<String, ArrayList<ProxiedPlayer>> serverStaff = this.instance.staffManager.getServerStaff();
 
             if (serverStaff.isEmpty()) {
@@ -58,33 +60,30 @@ public class StaffCommand extends Command {
                     if (server == null) return;
                     if (server.getPlayers().stream().noneMatch((user) -> user.hasPermission(permission)) && !this.instance.config.getConfig().getBoolean("utils.showServersWithoutStaff")) return;
 
-                    server.ping((result, error) -> {
-                        if (error == null && result != null && result.getVersion() != null) {
-                            Collection<ProxiedPlayer> players = server.getPlayers();
+                    Collection<ProxiedPlayer> players = server.getPlayers();
 
-                            String serverLine = instance.config.getConfig().getString("staffCommand.serverLine")
-                                    .replace("{server}", server.getName())
-                                    .replace("{players}", String.valueOf(players.size()))
-                                    .replace("{maxPlayers}", String.valueOf(result.getPlayers().getMax()));
+                    String serverLine = instance.config.getConfig().getString("staffCommand.serverLine")
+                            .replace("{server}", server.getName())
+                            .replace("{players}", String.valueOf(players.size()));
 
-                            builder.append("\n").append(Chat.colorize(serverLine));
+                    builder.append("\n").append(Chat.colorize(serverLine));
 
-                            if (staff.size() == 0) {
-                                builder.append("\n").append(Chat.colorize(instance.config.getConfig().getString("staffCommand.noStaffLine"))).append("\n");
-                            } else {
-                                staff.forEach((staffMember) -> {
-                                    String staffLine = instance.config.getConfig().getString("staffCommand.staffLine")
-                                            .replace("{prefix}", instance.staffManager.getStaffPrefix(staffMember))
-                                            .replace("{player}", staffMember.getDisplayName())
-                                            .replace("{time}", instance.staffManager.getLoginTimeFormatted(staffMember));
+                    if (staff.size() == 0) {
+                        builder.append("\n").append(Chat.colorize(instance.config.getConfig().getString("staffCommand.noStaffLine"))).append("\n");
+                    } else {
+                        staff.forEach((staffMember) -> {
+                            String staffLine = instance.config.getConfig().getString("staffCommand.staffLine")
+                                    .replace("{prefix}", instance.staffManager.getStaffPrefix(staffMember))
+                                    .replace("{player}", staffMember.getDisplayName())
+                                    .replace("{time}", instance.staffManager.getLoginTimeFormatted(staffMember));
 
-                                    builder.append(Chat.colorize("\n" + staffLine));
-                                });
-                                builder.append("\n");
-                            }
-                        }
+                            builder.append(Chat.colorize("\n" + staffLine));
+                        });
+                        builder.append("\n");
+                    }
+                    this.instance.getProxy().getScheduler().schedule(this.instance, () -> {
                         player.sendMessage(new TextComponent(builder.toString()));
-                    });
+                    }, 10, TimeUnit.MILLISECONDS);
                 });
             }
         }

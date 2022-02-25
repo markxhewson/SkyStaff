@@ -4,7 +4,7 @@ utils:
 
 staffCommand:
   header: '&5&l<!> &dOnline Staff &7({players}/{maxPlayers})'
-  serverLine: '&6&l➦ &e&l{server} &7({players}/{maxPlayers})'
+  serverLine: '&6&l➦ &e&l{server} &7({players})'
   staffLine: ' &f» {prefix}{player} &7[&a{time}&7]'
   noStaffLine: ' &cNo staff is online.'
   noStaffOnlineLine: ' &cThere are currently no members of staff to display.'
