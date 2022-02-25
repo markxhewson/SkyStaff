@@ -33,10 +33,22 @@ public class StaffCommand extends Command {
             if (strings[0].equalsIgnoreCase("hide")) {
                 if (this.instance.staffManager.isHidden(player)) {
                     this.instance.staffManager.unhideStaff(player);
-                    player.sendMessage(new TextComponent(Chat.colorize(this.instance.config.getConfig().getString("hideCommand.hideLine").replace("{mode}", "enabled"))));
+                    player.sendMessage(TextComponent.fromLegacyText(Chat.colorize(this.instance.config.getConfig().getString("hideCommand.hideLine").replace("{mode}", "enabled"))));
                 } else {
                     this.instance.staffManager.hideStaff(player);
-                    player.sendMessage(new TextComponent(Chat.colorize(this.instance.config.getConfig().getString("hideCommand.hideLine").replace("{mode}", "disabled"))));
+                    player.sendMessage(TextComponent.fromLegacyText(Chat.colorize(this.instance.config.getConfig().getString("hideCommand.hideLine").replace("{mode}", "disabled"))));
+                }
+            } else if (strings[0].equalsIgnoreCase("toggle")) {
+                if (!player.hasPermission(this.instance.config.getConfig().getString("utils.adminPermission"))) {
+                    player.sendMessage(TextComponent.fromLegacyText(Chat.colorize(this.instance.config.getConfig().getString("utils.noPerm"))));
+                    return;
+                }
+                if (this.instance.staffManager.isAlertsToggled(player)) {
+                    this.instance.staffManager.untoggleAlerts(player);
+                    player.sendMessage(TextComponent.fromLegacyText(Chat.colorize(this.instance.config.getConfig().getString("alertsCommand.toggle").replace("{mode}", "enabled"))));
+                } else {
+                    this.instance.staffManager.toggleAlerts(player);
+                    player.sendMessage(TextComponent.fromLegacyText(Chat.colorize(this.instance.config.getConfig().getString("alertsCommand.toggle").replace("{mode}", "disabled"))));
                 }
             }
         } else {
@@ -81,10 +93,10 @@ public class StaffCommand extends Command {
                         });
                         builder.append("\n");
                     }
-                    this.instance.getProxy().getScheduler().schedule(this.instance, () -> {
-                        player.sendMessage(new TextComponent(builder.toString()));
-                    }, 10, TimeUnit.MILLISECONDS);
                 });
+                this.instance.getProxy().getScheduler().schedule(this.instance, () -> {
+                    player.sendMessage(TextComponent.fromLegacyText(builder.toString()));
+                }, 10, TimeUnit.MILLISECONDS);
             }
         }
     }

@@ -8,6 +8,7 @@ import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.event.EventHandler;
 import xyz.lotho.me.commands.StaffCommand;
+import xyz.lotho.me.managers.AlertsManager;
 import xyz.lotho.me.managers.StaffManager;
 import xyz.lotho.me.utils.Config;
 
@@ -22,6 +23,8 @@ public final class SkyStaff extends Plugin implements Listener {
     public void onEnable() {
         this.getProxy().getPluginManager().registerCommand(this, new StaffCommand(this));
         this.getProxy().getPluginManager().registerListener(this, this);
+        this.getProxy().getPluginManager().registerListener(this, new AlertsManager(this));
+
 
         luckPermsAPI = LuckPermsProvider.get();
     }
@@ -29,15 +32,5 @@ public final class SkyStaff extends Plugin implements Listener {
     @Override
     public void onDisable() {
         super.onDisable();
-    }
-
-    @EventHandler
-    public void onPostLogin(PostLoginEvent event) {
-        this.staffManager.addLoginTime(event.getPlayer());
-    }
-
-    @EventHandler
-    public void onLeave(PlayerDisconnectEvent event) {
-        this.staffManager.removeLoginTime(event.getPlayer());
     }
 }

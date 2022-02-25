@@ -26,8 +26,17 @@ staffCommand:
   noStaffLine: ' &cNo staff is online.'
   noStaffOnlineLine: ' &cThere are currently no members of staff to display.'
 
+alertsCommand:
+  toggle: '&dYou have &f{mode} &dyour staff alerts.'
+
 hideCommand:
   hideLine: '&dYou have &f{mode} &dyour staff list visibility.'
+
+staffAlerts:
+  connected: '&9[S] &f{player} &dhas connected to &e{server}&d.'
+  switched: '&9[S] &f{player} &dhas moved from &e{oldServer} &dto &e{newServer}&d!'
+  disconnected: '&9[S] &5&l<!> &f{player} &dhas disconnected from &e{server}&d!'
+
 
 servers:
   - hub-01

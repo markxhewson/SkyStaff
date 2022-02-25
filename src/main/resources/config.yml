@@ -1,5 +1,7 @@
 utils:
+  noPerm: "&cI'm sorry, but you do not have permission to perform this command. Please contact the server administrators if you believe that this is in error."
   staffPermission: 'skycloud.staff'
+  adminPermission: 'skycloud.admin'
   showServersWithoutStaff: true
 
 staffCommand:
@@ -11,6 +13,14 @@ staffCommand:
 
 hideCommand:
   hideLine: '&5&l<!> &dYou have &f{mode} &dyour staff list visibility.'
+
+alertsCommand:
+  toggle: '&5&l<!> &dYou have &f{mode} &dyour staff alerts.'
+
+staffAlerts:
+  connected: '&5&l<!> &f{player} &dhas connected to &e{server}&d.'
+  switched: '&5&l<!> &f{player} &dhas moved from &e{oldServer} &dto &e{newServer}&d!'
+  disconnected: '&5&l<!> &f{player} &dhas disconnected from &e{server}&d!'
 
 servers:
   - hub-1

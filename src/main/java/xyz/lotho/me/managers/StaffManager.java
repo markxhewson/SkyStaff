@@ -16,10 +16,23 @@ public class StaffManager {
 
     public HashMap<ProxiedPlayer, Long> loginTimes = new HashMap<>();
     public ArrayList<ProxiedPlayer> hiddenStaff = new ArrayList<>();
+    public ArrayList<ProxiedPlayer> alertsToggle = new ArrayList<>();
 
     public StaffManager(SkyStaff instance) {
         this.instance = instance;
         this.staffPermission = this.instance.config.getConfig().getString("utils.staffPermission");
+    }
+
+    public void toggleAlerts(ProxiedPlayer player) {
+        this.alertsToggle.add(player);
+    }
+
+    public void untoggleAlerts(ProxiedPlayer player) {
+        this.alertsToggle.remove(player);
+    }
+
+    public boolean isAlertsToggled(ProxiedPlayer player) {
+        return this.alertsToggle.contains(player);
     }
 
     public void addLoginTime(ProxiedPlayer player) {
