@@ -24,9 +24,7 @@ public final class SkyStaff extends Plugin implements Listener {
     public void onEnable() {
         this.getProxy().getPluginManager().registerCommand(this, new StaffCommand(this));
         this.getProxy().getPluginManager().registerCommand(this, new StaffChatCommand(this));
-        this.getProxy().getPluginManager().registerListener(this, this);
         this.getProxy().getPluginManager().registerListener(this, new AlertsManager(this));
-
 
         luckPermsAPI = LuckPermsProvider.get();
     }
