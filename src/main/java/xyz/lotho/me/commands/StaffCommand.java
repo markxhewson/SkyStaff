@@ -1,9 +1,6 @@
 package xyz.lotho.me.commands;
 
-import net.luckperms.api.model.user.User;
-import net.md_5.bungee.api.Callback;
 import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.ServerPing;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -12,7 +9,6 @@ import xyz.lotho.me.SkyStaff;
 import xyz.lotho.me.utils.Chat;
 
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 public class StaffCommand extends Command {
 
@@ -34,24 +30,27 @@ public class StaffCommand extends Command {
             if (strings[0].equalsIgnoreCase("hide")) {
                 if (this.instance.staffManager.isHidden(player)) {
                     this.instance.staffManager.unhideStaff(player);
-                    player.sendMessage(new TextComponent(Chat.colorize(this.instance.config.getConfig().getString("messages.hideLine").replace("{mode}", "enabled"))));
+                    player.sendMessage(new TextComponent(Chat.colorize(this.instance.config.getConfig().getString("hideCommand.hideLine").replace("{mode}", "enabled"))));
                 } else {
                     this.instance.staffManager.hideStaff(player);
-                    player.sendMessage(new TextComponent(Chat.colorize(this.instance.config.getConfig().getString("messages.hideLine").replace("{mode}", "disabled"))));
+                    player.sendMessage(new TextComponent(Chat.colorize(this.instance.config.getConfig().getString("hideCommand.hideLine").replace("{mode}", "disabled"))));
                 }
             }
         } else {
             StringBuilder builder = new StringBuilder();
 
             String permission = this.instance.config.getConfig().getString("utils.staffPermission");
-            String header = this.instance.config.getConfig().getString("messages.header").replace("{players}", String.valueOf(this.instance.getProxy().getPlayers().size()));
+            String header = this.instance.config.getConfig().getString("staffCommand.header")
+                    .replace("{players}", String.valueOf(this.instance.getProxy().getPlayers().size()))
+                    .replace("{maxPlayers}", String.valueOf(this.instance.getProxy().getConfigurationAdapter().getListeners().iterator().next().getMaxPlayers()));
 
             builder.append("\n").append(Chat.colorize(header)).append("\n");
+
 
             HashMap<String, ArrayList<ProxiedPlayer>> serverStaff = this.instance.staffManager.getServerStaff();
 
             if (serverStaff.isEmpty()) {
-                builder.append("\n").append(Chat.colorize(this.instance.config.getConfig().getString("messages.noStaffOnlineLine"))).append("\n");
+                builder.append("\n").append(Chat.colorize(this.instance.config.getConfig().getString("staffCommand.noStaffOnlineLine"))).append("\n");
             } else {
                 this.instance.staffManager.getServerStaff().forEach((serverName, staff) -> {
                     ServerInfo server = this.instance.getProxy().getServerInfo(serverName);
@@ -63,7 +62,7 @@ public class StaffCommand extends Command {
                         if (error == null && result != null && result.getVersion() != null) {
                             Collection<ProxiedPlayer> players = server.getPlayers();
 
-                            String serverLine = instance.config.getConfig().getString("messages.serverLine")
+                            String serverLine = instance.config.getConfig().getString("staffCommand.serverLine")
                                     .replace("{server}", server.getName())
                                     .replace("{players}", String.valueOf(players.size()))
                                     .replace("{maxPlayers}", String.valueOf(result.getPlayers().getMax()));
@@ -71,10 +70,10 @@ public class StaffCommand extends Command {
                             builder.append("\n").append(Chat.colorize(serverLine));
 
                             if (staff.size() == 0) {
-                                builder.append("\n").append(Chat.colorize(instance.config.getConfig().getString("messages.noStaffLine"))).append("\n");
+                                builder.append("\n").append(Chat.colorize(instance.config.getConfig().getString("staffCommand.noStaffLine"))).append("\n");
                             } else {
                                 staff.forEach((staffMember) -> {
-                                    String staffLine = instance.config.getConfig().getString("messages.staffLine")
+                                    String staffLine = instance.config.getConfig().getString("staffCommand.staffLine")
                                             .replace("{prefix}", instance.staffManager.getStaffPrefix(staffMember))
                                             .replace("{player}", staffMember.getDisplayName())
                                             .replace("{time}", instance.staffManager.getLoginTimeFormatted(staffMember));

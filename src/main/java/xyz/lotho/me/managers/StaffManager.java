@@ -63,10 +63,12 @@ public class StaffManager {
         this.instance.config.getConfig().getStringList("servers").forEach((serverName) -> {
             ServerInfo server = this.instance.getProxy().getServerInfo(serverName);
 
-            if (server.getPlayers().stream().noneMatch((player) -> player.hasPermission(this.staffPermission) && !this.instance.staffManager.isHidden(player)) && !this.instance.config.getConfig().getBoolean("utils.showServersWithoutStaff")) return;
+            if (server == null) return;
+            if (server.getPlayers().stream().noneMatch((player) -> player.hasPermission(this.staffPermission)
+                    && !this.instance.staffManager.isHidden(player)
+                    ) && !this.instance.config.getConfig().getBoolean("utils.showServersWithoutStaff")) return;
 
             serverStaff.put(server.getName(), new ArrayList<>());
-
             server.getPlayers().stream().filter((player) -> player.hasPermission(this.staffPermission)).forEach((player) -> {
                 if (this.instance.staffManager.isHidden(player)) return;
 

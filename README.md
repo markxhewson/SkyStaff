@@ -18,14 +18,16 @@ Once you have finished configuring the file, you can then start the server to se
 utils:
   staffPermission: 'server.staff'
   showServersWithoutStaff: true
-
-messages:
+  
+staffCommand:
   header: ' &9&lOnline Staff &7({players})'
   serverLine: '&6- &a{server} &7({players})'
   staffLine: '  &f- {prefix}{player} &7[{time}&7]'
   noStaffLine: ' &cNo staff is online.'
-  hideLine: '&dYou have &f{mode} &dyour staff list visibility.'
   noStaffOnlineLine: ' &cThere are currently no members of staff to display.'
+
+hideCommand:
+  hideLine: '&dYou have &f{mode} &dyour staff list visibility.'
 
 servers:
   - hub-01
