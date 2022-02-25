@@ -7,8 +7,6 @@ import net.md_5.bungee.api.plugin.Command;
 import xyz.lotho.me.SkyStaff;
 import xyz.lotho.me.utils.Chat;
 
-import java.util.Arrays;
-
 public class StaffChatCommand extends Command {
 
     SkyStaff instance;
