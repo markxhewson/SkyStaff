@@ -16,7 +16,9 @@ Once you have finished configuring the file, you can then start the server to se
 
 ```yml
 utils:
+  noPerm: "&cI'm sorry, but you do not have permission to perform this command. Please contact the server administrators if you believe that this is in error."
   staffPermission: 'server.staff'
+  adminPermission: 'server.admin'
   showServersWithoutStaff: true
   
 staffCommand:
@@ -28,6 +30,11 @@ staffCommand:
 
 alertsCommand:
   toggle: '&dYou have &f{mode} &dyour staff alerts.'
+
+staffChat:
+  format: '&9[S] {rank}{player} &7{server} &f» &f{content}'
+  invalid: '&cInvalid Usages! Usage: /staffchat <content: String>'
+
 
 hideCommand:
   hideLine: '&dYou have &f{mode} &dyour staff list visibility.'

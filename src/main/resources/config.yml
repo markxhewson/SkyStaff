@@ -11,6 +11,10 @@ staffCommand:
   noStaffLine: ' &cNo staff is online.'
   noStaffOnlineLine: ' &cThere are currently no members of staff to display.'
 
+staffChat:
+  format: '&5&l<!> {rank}{player} &7{server} &f» &f{content}'
+  invalid: '&cUsage: /staffchat <content: String>'
+
 hideCommand:
   hideLine: '&5&l<!> &dYou have &f{mode} &dyour staff list visibility.'
 
