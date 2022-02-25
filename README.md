@@ -20,7 +20,7 @@ utils:
   showServersWithoutStaff: true
   
 staffCommand:
-  header: ' &9&lOnline Staff &7({players})'
+  header: ' &9&lOnline Staff &7({players}/{maxPlayers})'
   serverLine: '&6- &a{server} &7({players})'
   staffLine: '  &f- {prefix}{player} &7[{time}&7]'
   noStaffLine: ' &cNo staff is online.'
