@@ -5,28 +5,29 @@ utils:
   showServersWithoutStaff: true
 
 staffCommand:
-  header: '&5&l<!> &dOnline Staff &7({players}/{maxPlayers})'
+  header: '&c&l<!> &dOnline Staff &7({players}/{maxPlayers})'
   serverLine: '&6&l➦ &e&l{server} &7({players})'
   staffLine: ' &f» {prefix}{player} &7[&a{time}&7]'
-  noStaffLine: ' &cNo staff is online.'
-  noStaffOnlineLine: ' &cThere are currently no members of staff to display.'
+  noStaffLine: ' &cNo members of staff are online.'
+  noStaffOnlineLine: ' &cThere are currently no members of staff on the network.'
 
 staffChat:
-  format: '&5&l<!> {rank}{player} &7{server} &f» &f{content}'
+  format: '&8(&cSTAFF&8) {rank}{player} &7({server}) &8» &f{content}'
   invalid: '&cUsage: /staffchat <content: String>'
 
 hideCommand:
-  hideLine: '&5&l<!> &dYou have &f{mode} &dyour staff list visibility.'
+  hideLine: '&8(&cSTAFF&8) &7You have &c{mode} &7your staff list visibility.'
 
 alertsCommand:
-  toggle: '&5&l<!> &dYou have &f{mode} &dyour staff alerts.'
+  toggle: '&8(&cSTAFF&8) &7You have &c{mode} &7your staff alerts.'
 
 staffAlerts:
-  connected: '&5&l<!> &f{player} &dhas connected to &e{server}&d.'
-  switched: '&5&l<!> &f{player} &dhas moved from &e{oldServer} &dto &e{newServer}&d!'
-  disconnected: '&5&l<!> &f{player} &dhas disconnected from &e{server}&d!'
+  connected: '&8(&cSTAFF&8) &e{player} &7has connected to &e{server}&7.'
+  switched: '&8(&cSTAFF&8) &e{player} &7has moved from &e{oldServer} &7to &e{newServer}&7.'
+  disconnected: '&8(&cSTAFF&8) &e{player} &7has disconnected from &e{server}&a.'
 
 servers:
   - hub-1
   - hub-2
   - atlas-1
+  - orbit-1
