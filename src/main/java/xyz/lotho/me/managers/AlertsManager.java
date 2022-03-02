@@ -32,8 +32,8 @@ public class AlertsManager implements Listener {
 
         this.instance.staffManager.removeLoginTime(player);
 
-        if (player.hasPermission(this.staffPermission)) return;
-        if (!this.instance.staffManager.isAlertsToggled(player)) return;
+        if (!player.hasPermission(this.staffPermission)) return;
+        if (this.instance.staffManager.isAlertsToggled(player)) return;
 
         String message = this.instance.config.getConfig().getString("staffAlerts.disconnected")
                 .replace("{player}", player.getDisplayName())
